@@ -1,0 +1,30 @@
+Account Length: medium
+Churn?: False.
+CustServ Calls: medium
+Day Calls: medium
+Day Mins: medium
+Eve Calls: medium
+Int'l Plan: no
+Intl Calls: medium
+Intl Mins: medium
+Night Calls: medium
+Account Length: medium, Intl Mins: medium
+Churn?: False., CustServ Calls: medium
+Churn?: False., Intl Mins: medium
+CustServ Calls: medium, Day Calls: medium
+CustServ Calls: medium, Eve Calls: medium
+CustServ Calls: medium, Int'l Plan: no
+CustServ Calls: medium, Intl Calls: medium
+CustServ Calls: medium, Intl Mins: medium
+CustServ Calls: medium, Night Calls: medium
+Day Calls: medium, Intl Calls: medium
+Day Calls: medium, Intl Mins: medium
+Eve Calls: medium, Intl Calls: medium
+Eve Calls: medium, Intl Mins: medium
+Int'l Plan: no, Intl Calls: medium
+Int'l Plan: no, Intl Mins: medium
+Int'l Plan: no, Night Calls: medium
+Intl Calls: medium, Intl Mins: medium
+Intl Calls: medium, Night Calls: medium
+Intl Mins: medium, Night Calls: medium
+CustServ Calls: medium, Intl Calls: medium, Intl Mins: medium
