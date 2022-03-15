@@ -162,7 +162,7 @@ def visualize_data():
         plt.title(visual_col+" "+type_chart)
     elif type_chart == 'Bar chart':
         process_data = data[visual_col].value_counts()
-        plt.bar(y=process_data,x=process_data.keys())
+        plt.bar(process_data.keys(),process_data)
         plt.title(visual_col+" "+type_chart)
     elif type_chart == 'Box plot':
         pass
