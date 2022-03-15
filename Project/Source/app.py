@@ -1,12 +1,13 @@
-from ast import Global
+
 from cgitb import text
 import tkinter as tk
 from turtle import width
-from numpy import pad, size
 import pandas as pd
 from tkinter import VERTICAL, ttk
 from tkinter import filedialog, messagebox
 import matplotlib.pyplot as plt
+# import sklearn
+import seaborn as sns
 
 global df
 
@@ -18,7 +19,7 @@ top.pack_propagate(False)
 top.resizable(0,0)
 
 #PRINT DATA
-frame1 = tk.LabelFrame(top, text="Dữ liệu")
+frame1 = tk.LabelFrame(top, text="DỮ LIỆU")
 frame1.place(relheight=0.5,relwidth=0.75)
 
 # Describe frame
@@ -33,6 +34,7 @@ desc_scrollx = tk.Scrollbar(desc_frame,orient="horizontal", command=desc_view.xv
 desc_view.configure(xscrollcommand=desc_scrollx.set)
 
 desc_scrollx.pack(side="bottom",fill="x")
+
 
 
 #OPEN FILE
@@ -66,13 +68,24 @@ Data_scrollx.pack(side="bottom",fill="x")
 Data_scrolly.pack(side="right",fill="y")
 
 # Visualization
-visual_frame = tk.LabelFrame(top)
-visual_frame.place(relx=0.75)
+visual_frame = tk.LabelFrame(top,text="TRỰC QUAN HOÁ")
+visual_frame.place(relx=0.75,relwidth=0.25,relheight=1)
+
+
 # Drop down list
-list_field = []
-tkvar = tk.StringVar(top)
-drop_down = tk.OptionMenu(visual_frame,tkvar,"a","b")
-drop_down.pack()
+tkvar1 = tk.StringVar()
+drop_down_field = ttk.Combobox(visual_frame,textvariable=tkvar1)
+drop_down_field.pack()
+
+# Drop down type chart
+tkvar2 = tk.StringVar()
+drop_down_type_chart = ttk.Combobox(visual_frame,textvariable=tkvar2)
+drop_down_type_chart['value'] = ['Histogram','Pie chart','Bar chart']
+drop_down_type_chart.pack()
+
+# Visual button
+visual_button = tk.Button(visual_frame,text="Trực quan",command=lambda:visualize_data())
+visual_button.pack()
 
 #---------------------------------------------------------END VIEW--------------------------------------------------------------------
 
@@ -105,6 +118,8 @@ def load_file_data():
 
     clear_data()
     # Print data
+    global data
+    data = df
     Dataview["columns"] = list(df.columns)
     Dataview["show"] = "headings"
     for column in Dataview["columns"]:
@@ -113,6 +128,9 @@ def load_file_data():
     df_rows = df.to_numpy().tolist()
     for row in df_rows:
         Dataview.insert("","end",values=row)
+
+    # Add option for visualize 
+    drop_down_field['values'] = Dataview["columns"]
 
     # Print describe
     desc_info = df.describe().reset_index()
@@ -125,10 +143,30 @@ def load_file_data():
     for row in df_rows:
         desc_view.insert("","end",values=row)
 
+
+
     return None
 
 def clear_data():
     Dataview.delete(*Dataview.get_children())
     desc_view.delete(*desc_view.get_children())
+
+def visualize_data():
+    visual_col = drop_down_field.get()
+    type_chart = drop_down_type_chart.get()
+    if type_chart == 'Histogram':
+        sns.histplot(data=data,x=visual_col)
+    elif type_chart == 'Pie chart':
+        process_data = data[visual_col].value_counts()
+        plt.pie(process_data,labels=process_data.keys(),autopct='%.2f')
+        plt.title(visual_col+" "+type_chart)
+    elif type_chart == 'Bar chart':
+        process_data = data[visual_col].value_counts()
+        plt.bar(y=process_data,x=process_data.keys())
+        plt.title(visual_col+" "+type_chart)
+    elif type_chart == 'Box plot':
+        pass
+    plt.show()
+    
 
 top.mainloop()
